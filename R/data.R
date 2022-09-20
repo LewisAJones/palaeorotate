@@ -1,0 +1,42 @@
+#' Golonka rotation file
+#'
+#' Rotation files provide pre-generated palaeocoordinates for a
+#' 1&deg; x 1&deg; spatial grid which can be used to spatiotemporally link
+#' fossil localities (or other geographic data) with their position in the
+#' geological past. Rotations were generated for the midpoint age of all
+#' Phanerozoic stratigraphic stages (0--540 Ma).
+#' \cr
+#' \cr
+#' This file provides palaeorotations from the Golonka plate rotation model
+#' (Wright et al., 2013).
+#' Palaeocoordinates were generated via the GPlates API service, available at
+#' the following: \url{https://gwsdoc.gplates.org}. This model has a temporal
+#' coverage of 0--540 Ma.
+#' \cr
+#' \cr
+#' **NOTE**: two modifications have been made to the data accessed via the API
+#' service:
+#' (1) data has been rounded to two decimal places to reduce file size, and
+#' (2) palaeocoordinates which do not change across the whole time series are
+#' assumed to be areas not covered by the models, and are updated to
+#' NA accordingly.
+#' @section Reference:
+#' Wright, N., Zahirovic, S., Müller, R. D., & Seton, M. (2013). Towards
+#' community-driven paleogeographic
+#' reconstructions: integrating open-access paleogeographic and paleobiology
+#' data with plate tectonics.
+#' Biogeosciences, 10(3), 1529–1541. \doi{10.5194/bg-10-1529-2013}.
+#'
+#' See GPlates documentation for additional information and details:
+#' \url{https://gwsdoc.gplates.org/reconstruction}.
+#'
+#' @format A data frame with 196 variables:
+#' \describe{
+#'   \item{lng}{Reference longitude for the 1&deg; x 1&deg; spatial grid}
+#'   \item{lat}{Reference latitude for the 1&deg; x 1&deg; spatial grid}
+#'   \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
+#'   \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
+#'   \item{...}{Palaeolongitude and palaeolatitude of reference coordinates at
+#'   respective age of rotation}
+#'   }
+"GOLONKA"
