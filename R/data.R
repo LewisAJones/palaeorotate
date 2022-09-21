@@ -14,12 +14,13 @@
 #' coverage of 0--540 Ma.
 #' \cr
 #' \cr
-#' **NOTE**: two modifications have been made to the data accessed via the API
+#' **NOTE**: three modifications have been made to the data accessed via the API
 #' service:
-#' (1) data has been rounded to two decimal places to reduce file size, and
+#' (1) data has been rounded to two decimal places to reduce file size,
 #' (2) palaeocoordinates which do not change across the whole time series are
 #' assumed to be areas not covered by the models, and are updated to
-#' NA accordingly.
+#' NA accordingly, and (3) all returned palaeocoordinates beyond the temporal
+#' range of the respective model are set to NA.
 #' @section Reference:
 #' Golonka, J. (2007). Late Triassic and Early Jurassic palaeogeography of the
 #' world. Palaeogeography, Palaeoclimatology, Palaeoecology, 244(1-4), 297-307.
@@ -39,8 +40,7 @@
 #'   \item{lat}{Reference latitude for the 1&deg; x 1&deg; spatial grid}
 #'   \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
 #'   \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
-#'   \item{...}{Palaeocoordinates of reference coordinates at
-#'   respective age of rotation}
+#'   ...
 #'   }
 "golonka"
 
@@ -60,12 +60,13 @@
 #' coverage of 0--410 Ma.
 #' \cr
 #' \cr
-#' **NOTE**: two modifications have been made to the data accessed via the API
+#' **NOTE**: three modifications have been made to the data accessed via the API
 #' service:
-#' (1) data has been rounded to two decimal places to reduce file size, and
+#' (1) data has been rounded to two decimal places to reduce file size,
 #' (2) palaeocoordinates which do not change across the whole time series are
 #' assumed to be areas not covered by the models, and are updated to
-#' NA accordingly.
+#' NA accordingly, and (3) all returned palaeocoordinates beyond the temporal
+#' range of the respective model are set to NA.
 #' @section Reference:
 #' Matthews, K.J., Maloney, K.T., Zahirovic, S., Williams, S.E., Seton, M.,
 #' and Müller, R.D. (2016). Global plate boundary evolution and kinematics
@@ -81,8 +82,7 @@
 #'   \item{lat}{Reference latitude for the 1&deg; x 1&deg; spatial grid}
 #'   \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
 #'   \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
-#'   \item{...}{Palaeocoordinates of reference coordinates at
-#'   respective age of rotation}
+#'   ...
 #'   }
 "matthews2016_mantle"
 
@@ -102,12 +102,13 @@
 #' coverage of 0--410 Ma.
 #' \cr
 #' \cr
-#' **NOTE**: two modifications have been made to the data accessed via the API
+#' **NOTE**: three modifications have been made to the data accessed via the API
 #' service:
-#' (1) data has been rounded to two decimal places to reduce file size, and
+#' (1) data has been rounded to two decimal places to reduce file size,
 #' (2) palaeocoordinates which do not change across the whole time series are
 #' assumed to be areas not covered by the models, and are updated to
-#' NA accordingly.
+#' NA accordingly, and (3) all returned palaeocoordinates beyond the temporal
+#' range of the respective model are set to NA.
 #' @section Reference:
 #' Matthews, K.J., Maloney, K.T., Zahirovic, S., Williams, S.E., Seton, M.,
 #' and Müller, R.D. (2016). Global plate boundary evolution and kinematics
@@ -123,8 +124,7 @@
 #'   \item{lat}{Reference latitude for the 1&deg; x 1&deg; spatial grid}
 #'   \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
 #'   \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
-#'   \item{...}{Palaeocoordinates of reference coordinates at
-#'   respective age of rotation}
+#'   ...
 #'   }
 "matthews2016_pmag"
 
@@ -144,12 +144,13 @@
 #' coverage of 0--540 Ma.
 #' \cr
 #' \cr
-#' **NOTE**: two modifications have been made to the data accessed via the API
+#' **NOTE**: three modifications have been made to the data accessed via the API
 #' service:
-#' (1) data has been rounded to two decimal places to reduce file size, and
+#' (1) data has been rounded to two decimal places to reduce file size,
 #' (2) palaeocoordinates which do not change across the whole time series are
 #' assumed to be areas not covered by the models, and are updated to
-#' NA accordingly.
+#' NA accordingly, and (3) all returned palaeocoordinates beyond the temporal
+#' range of the respective model are set to NA.
 #' @section Reference:
 #' Merdith, A., Williams, S.E., Collins, A.S., Tetley, M.G., Mulder, J.A.,
 #' Blades, M.L., Young, A., Armistead, S.E., Cannon, J., Zahirovic, S.,
@@ -167,8 +168,7 @@
 #'   \item{lat}{Reference latitude for the 1&deg; x 1&deg; spatial grid}
 #'   \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
 #'   \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
-#'   \item{...}{Palaeocoordinates of reference coordinates at
-#'   respective age of rotation}
+#'   ...
 #'   }
 "merdith2021"
 
@@ -188,12 +188,13 @@
 #' coverage of 0--230 Ma.
 #' \cr
 #' \cr
-#' **NOTE**: two modifications have been made to the data accessed via the API
+#' **NOTE**: three modifications have been made to the data accessed via the API
 #' service:
-#' (1) data has been rounded to two decimal places to reduce file size, and
+#' (1) data has been rounded to two decimal places to reduce file size,
 #' (2) palaeocoordinates which do not change across the whole time series are
 #' assumed to be areas not covered by the models, and are updated to
-#' NA accordingly.
+#' NA accordingly, and (3) all returned palaeocoordinates beyond the temporal
+#' range of the respective model are set to NA.
 #' @section Reference:
 #' Müller R.D., Seton, M., Zahirovic, S., Williams, S.E., Matthews, K.J.,
 #' Wright, N.M., Shephard, G.E., Maloney, K.T., Barnett-Moore, N.,
@@ -211,8 +212,7 @@
 #'   \item{lat}{Reference latitude for the 1&deg; x 1&deg; spatial grid}
 #'   \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
 #'   \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
-#'   \item{...}{Palaeocoordinates of reference coordinates at
-#'   respective age of rotation}
+#'   ...
 #'   }
 "muller2016"
 
@@ -232,12 +232,13 @@
 #' coverage of 0--1100 Ma.
 #' \cr
 #' \cr
-#' **NOTE**: two modifications have been made to the data accessed via the API
+#' **NOTE**: three modifications have been made to the data accessed via the API
 #' service:
-#' (1) data has been rounded to two decimal places to reduce file size, and
+#' (1) data has been rounded to two decimal places to reduce file size,
 #' (2) palaeocoordinates which do not change across the whole time series are
 #' assumed to be areas not covered by the models, and are updated to
-#' NA accordingly.
+#' NA accordingly, and (3) all returned palaeocoordinates beyond the temporal
+#' range of the respective model are set to NA.
 #' @section Reference:
 #' Müller, R. D., Zahirovic, S., Williams, S. E., Cannon, J., Seton, M.,
 #' Bower, D. J., Tetley, M. G., Heine, C., Le Breton, E., Liu, S.,
@@ -255,8 +256,7 @@
 #'   \item{lat}{Reference latitude for the 1&deg; x 1&deg; spatial grid}
 #'   \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
 #'   \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
-#'   \item{...}{Palaeocoordinates of reference coordinates at
-#'   respective age of rotation}
+#'   ...
 #'   }
 "muller2019"
 
@@ -276,12 +276,13 @@
 #' coverage of 0--750 Ma.
 #' \cr
 #' \cr
-#' **NOTE**: two modifications have been made to the data accessed via the API
+#' **NOTE**: three modifications have been made to the data accessed via the API
 #' service:
-#' (1) data has been rounded to two decimal places to reduce file size, and
+#' (1) data has been rounded to two decimal places to reduce file size,
 #' (2) palaeocoordinates which do not change across the whole time series are
 #' assumed to be areas not covered by the models, and are updated to
-#' NA accordingly.
+#' NA accordingly, and (3) all returned palaeocoordinates beyond the temporal
+#' range of the respective model are set to NA.
 #' @section Reference:
 #' Scotese, C., & Wright, N. M. (2018). PALEOMAP Paleodigital Elevation Models
 #' (PaleoDEMs) for the
@@ -297,8 +298,7 @@
 #'   \item{lat}{Reference latitude for the 1&deg; x 1&deg; spatial grid}
 #'   \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
 #'   \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
-#'   \item{...}{Palaeocoordinates of reference coordinates at
-#'   respective age of rotation}
+#'   ...
 #'   }
 "paleomap"
 
@@ -318,12 +318,13 @@
 #' coverage of 0--200 Ma.
 #' \cr
 #' \cr
-#' **NOTE**: two modifications have been made to the data accessed via the API
+#' **NOTE**: three modifications have been made to the data accessed via the API
 #' service:
-#' (1) data has been rounded to two decimal places to reduce file size, and
+#' (1) data has been rounded to two decimal places to reduce file size,
 #' (2) palaeocoordinates which do not change across the whole time series are
 #' assumed to be areas not covered by the models, and are updated to
-#' NA accordingly.
+#' NA accordingly, and (3) all returned palaeocoordinates beyond the temporal
+#' range of the respective model are set to NA.
 #' @section Reference:
 #' Seton, M., Müller, R.D., Zahirovic, S., Gaina, C., Torsvik, T.H.,
 #' Shephard, G., Talsma, A., Gurnis, M., Turner, M., Maus, S., Chandler, M.
@@ -340,15 +341,15 @@
 #'   \item{lat}{Reference latitude for the 1&deg; x 1&deg; spatial grid}
 #'   \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
 #'   \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
-#'   \item{...}{Palaeocoordinates of reference coordinates at
-#'   respective age of rotation}
+#'   ...
 #'   }
 "seton2012"
 
 #' Uncertainty reconstruction file
 #'
 #' This file provides the range in reconstructed palaeocoordinates from all
-#' available reconstruction files for each cell in the 1&deg; x 1&deg; spatial grid.
+#' available reconstruction files for each cell in the 1&deg; x 1&deg; spatial
+#' grid.
 #'
 #' @format A data frame with 196 variables:
 #' \describe{
@@ -358,7 +359,6 @@
 #'   for all reconstruction files}
 #'   \item{lat_1}{Palaeolatitudinal range of the reference longitude at 1 Ma
 #'   for all reconstruction files}
-#'   \item{...}{Range in palaeocoordinates of reference coordinates at
-#'   respective age of rotation for all reconstruction files}
+#'   ...
 #'   }
 "uncertainty"

@@ -11,7 +11,7 @@ This R package contains reconstruction files for a 1&deg; x 1&deg; spatial grid 
 - GOLONKA
 - PALEOMAP
 
-The package also contains an uncertainty file for the 1&deg; x 1&deg; spatial grid which provides the palaeolongitudinal and palaeolatitudinal range from all reconstruction files for each cell and timestep.
+The package also contains an uncertainty file for the 1&deg; x 1&deg; spatial grid, which provides the palaeolongitudinal and palaeolatitudinal range from all reconstruction files, for each cell and timestep.
 
 ## Installation
 

@@ -13,8 +13,7 @@ A data frame with 196 variables:
 for all reconstruction files}
 \item{lat_1}{Palaeolatitudinal range of the reference longitude at 1 Ma
 for all reconstruction files}
-\item{...}{Range in palaeocoordinates of reference coordinates at
-respective age of rotation for all reconstruction files}
+...
 }
 }
 \usage{

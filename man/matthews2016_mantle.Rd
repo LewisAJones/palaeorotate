@@ -11,8 +11,7 @@ A data frame with 196 variables:
 \item{lat}{Reference latitude for the 1° x 1° spatial grid}
 \item{lng_1}{Palaeolongitude of the reference longitude at 1 Ma}
 \item{lat_1}{Palaeolatitude of the reference latitude at 1 Ma}
-\item{...}{Palaeocoordinates of reference coordinates at
-respective age of rotation}
+...
 }
 }
 \usage{

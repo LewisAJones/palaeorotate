@@ -1,15 +1,20 @@
 Package: palaeorotate
 Type: Package
-Title: What the Package Does (Title Case)
+Title: An R package providing reconstruction files for plate rotation models
 Version: 0.1.0
-Authors@R: c(
-    person(given = "Lewis", middle = "A.", family = "Jones", email = "LewisAlan.Jones@uvigo.es",
-      role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3902-8986"))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: 
+     person("Lewis A.", "Jones", 
+     email = "LewisAlan.Jones@uvigo.es",
+     role = c("aut", "cre"), 
+     comment = c(ORCID = "0000-0003-3902-8986"))
+Description: The palaeorotate R package provides reconstruction files for a
+      1&deg; x 1&deg; spatial grid for various plate rotation models.
+      An uncertainty file, providing the range in reconstructed 
+      palaeocoordinates between all reconstruction files is also provided.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
+LazyDataCompression: xz
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Depends: 
