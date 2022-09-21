@@ -45,8 +45,13 @@ uncertainty <- lapply(ages, function(j) {
   # Calculate palaeolongitudinal range
   uncertainty_p_lng <- vector("numeric")
   for (i in seq_len(nrow(lng))) {
-    mx <- max(lng[i, ], na.rm = TRUE)
-    mn <- min(lng[i, ], na.rm = TRUE)
+    tmp_lng <- na.omit(as.numeric(lng[i, ]))
+    if (length(tmp_lng) <= 1) {
+      uncertainty_p_lng[i] <- NA
+      next
+    }
+    mx <- max(as.numeric(tmp_lng))
+    mn <- min(as.numeric(tmp_lng))
 
     range <- abs((mx %% 360) - (mn %% 360))
 
@@ -66,19 +71,43 @@ uncertainty <- lapply(ages, function(j) {
   # Calculate palaeolatitudinal range
   uncertainty_p_lat <- vector("numeric")
   for (i in seq_len(nrow(lat))) {
-    uncertainty_p_lat[i] <- max(lat[i, ], na.rm = TRUE) -
-      min(lat[i, ], na.rm = TRUE)
+    tmp_lat <- na.omit(as.numeric(lat[i, ]))
+    if (length(tmp_lat) <= 1) {
+      uncertainty_p_lat[i] <- NA
+      next
+    }
+    uncertainty_p_lat[i] <- max(as.numeric(tmp_lat)) -
+      min(as.numeric(tmp_lat))
   }
 
-  # Update values
-  uncertainty_p_lng[which(is.nan(uncertainty_p_lng))] <- NA
-  uncertainty_p_lat[which(is.nan(uncertainty_p_lat))] <- NA
-  uncertainty_p_lng[which(is.infinite(uncertainty_p_lng))] <- NA
-  uncertainty_p_lat[which(is.infinite(uncertainty_p_lat))] <- NA
+  # Calculate GCD distance between points
+  uncertainty_dist <- vector("numeric")
+  for (i in seq_len(nrow(lat))) {
+    # Get combination of coordinates for all models
+    tmpdf <- cbind(p_lng = as.numeric(lng[i, ]),
+                   p_lat = as.numeric(lat[i, ]))
+    # Exclude NAs
+    tmpdf <- na.omit(tmpdf)
+    # Allocate NA if only one or less models are available
+    if (nrow(tmpdf) <= 1) {
+      uncertainty_dist[i] <- NA
+      next
+    }
+    # Calculate GCD matrix using the Haversine method with a radius of
+    # 6378.388 km by default
+    vals <- fields::rdist.earth(x1 = tmpdf[, c("p_lng", "p_lat")],
+                                miles = FALSE)
+    # Extract location of points with max GCD
+    loc <- which(vals == max(vals), arr.ind = TRUE)
+    # Get maximum GCD in km
+    uncertainty_dist[i] <- as.numeric(max(vals))
+  }
 
   # Bind data
-  tmp <- cbind.data.frame(uncertainty_p_lng, uncertainty_p_lat)
-  colnames(tmp) <- c(paste0("lng_", j), paste0("lat_", j))
+  tmp <- cbind.data.frame(uncertainty_p_lng,
+                          uncertainty_p_lat,
+                          uncertainty_dist)
+  colnames(tmp) <- c(paste0("lng_", j), paste0("lat_", j), paste0("dist_", j))
 
   # Return data
   tmp
