@@ -1,6 +1,6 @@
 # palaeorotate
 
-This R package contains reconstruction files for a 1&deg; x 1&deg; spatial grid rotated to the midpoint age of all Phanerozoic stratigraphic stages (0--540 Ma). Palaeocoordinates were generated via the [GPlates API service](https://gwsdoc.gplates.org), and include the following models:
+This R package contains reconstruction files for a 1&deg; x 1&deg; spatial grid rotated to the midpoint age of all Phanerozoic stratigraphic stages (0–540 Ma). Palaeocoordinates were generated via the [GPlates API service](https://gwsdoc.gplates.org), and include the following models:
 
 - MERDITH2021
 - MULLER2019
