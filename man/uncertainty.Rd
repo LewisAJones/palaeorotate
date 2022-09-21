@@ -21,6 +21,7 @@ uncertainty
 }
 \description{
 This file provides the range in reconstructed palaeocoordinates from all
-available reconstruction files for each cell in the 1° x 1° spatial grid.
+available reconstruction files for each cell in the 1° x 1° spatial
+grid.
 }
 \keyword{datasets}

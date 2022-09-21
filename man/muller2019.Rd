@@ -32,12 +32,13 @@ the following: \url{https://gwsdoc.gplates.org}. This model has a temporal
 coverage of 0--1100 Ma.
 \cr
 \cr
-\strong{NOTE}: two modifications have been made to the data accessed via the API
+\strong{NOTE}: three modifications have been made to the data accessed via the API
 service:
-(1) data has been rounded to two decimal places to reduce file size, and
+(1) data has been rounded to two decimal places to reduce file size,
 (2) palaeocoordinates which do not change across the whole time series are
 assumed to be areas not covered by the models, and are updated to
-NA accordingly.
+NA accordingly, and (3) all returned palaeocoordinates beyond the temporal
+range of the respective model are set to NA.
 }
 \section{Reference}{
 
