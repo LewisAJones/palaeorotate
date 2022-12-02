@@ -1,9 +1,11 @@
 # Generate uncertainty file
 # Prepared by: Lewis A. Jones
+# Load libraries ----------------------------------------------------------
+library(geosphere)
+library(vegan)
 # Available models --------------------------------------------------------
 mod <- c("MERDITH2021", "MULLER2019", "MULLER2016", "MATTHEWS2016_mantle_ref",
-         "MATTHEWS2016_pmag_ref", "SETON2012", "GOLONKA",
-         "PALEOMAP")
+         "MATTHEWS2016_pmag_ref", "SETON2012", "GOLONKA", "PALEOMAP")
 # Available ages --------------------------------------------------------
 ages <- c(1, 2, 3, 4, 6, 9, 13, 15, 18, 22, 25, 31, 36, 39, 44, 52, 58,
           60, 64, 69, 78, 85, 88, 92, 97, 107, 119, 127, 131, 136, 142, 149,
@@ -103,11 +105,38 @@ uncertainty <- lapply(ages, function(j) {
     uncertainty_dist[i] <- as.numeric(max(vals))
   }
 
+  # Calculate MST between points
+  uncertainty_MST <- vector("numeric")
+  for (i in seq_len(nrow(lat))) {
+    # Get combination of coordinates for all models
+    tmpdf <- cbind(p_lng = as.numeric(lng[i, ]),
+                   p_lat = as.numeric(lat[i, ]))
+    # Exclude NAs
+    tmpdf <- na.omit(tmpdf)
+    # Allocate NA if only one or less models are available
+    if (nrow(tmpdf) <= 1) {
+      uncertainty_MST[i] <- NA
+      next
+    }
+    # Calculate distance matrix
+    dist_mat <- distm(tmpdf, fun = distGeo)
+    # Calculate MST
+    mst_dist <- spantree(dist_mat)$dist
+    # Sum tree and convert to km
+    mst_dist <- sum(mst_dist) / 10^3
+    # Get maximum GCD in km
+    uncertainty_MST[i] <- mst_dist
+  }
+
+
+
   # Bind data
   tmp <- cbind.data.frame(uncertainty_p_lng,
                           uncertainty_p_lat,
-                          uncertainty_dist)
-  colnames(tmp) <- c(paste0("lng_", j), paste0("lat_", j), paste0("dist_", j))
+                          uncertainty_dist,
+                          uncertainty_MST)
+  colnames(tmp) <- c(paste0("lng_", j), paste0("lat_", j),
+                     paste0("dist_", j), paste0("MST_", j))
 
   # Return data
   tmp

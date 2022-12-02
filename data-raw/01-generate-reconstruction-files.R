@@ -1,44 +1,69 @@
 # Generate reconstruction files
 # Prepared by: Lewis A. Jones
 # Load libraries ----------------------------------------------------------
-library(raster)
 library(pbmcapply)
 library(httr)
+library(h3jsr)
+library(sf)
+# Update working directory if using CESGA
+setwd("/mnt/netapp2/Store_uni/home/uvi/ba/ljo/rotations/")
 # Available models --------------------------------------------------------
 mod <- c("MERDITH2021", "MULLER2019", "MULLER2016", "MATTHEWS2016_mantle_ref",
-         "MATTHEWS2016_pmag_ref", "SETON2012", "GOLONKA",
-         "PALEOMAP")
+         "MATTHEWS2016_pmag_ref", "SETON2012", "GOLONKA", "PALEOMAP")
+age_range <- list(MERDITH2021 = 1000,
+                  MULLER2019 = 1100,
+                  MULLER2016 = 230,
+                  MATTHEWS2016_mantle_ref = 410,
+                  MATTHEWS2016_pmag_ref = 410,
+                  SETON2012 = 200,
+                  GOLONKA = 540,
+                  PALEOMAP = 750)
 # Generate grid -----------------------------------------------------------
-# Grid of 1 x 1 deg
-r <- raster(res = 1)
-xy <- as.data.frame(r, xy = TRUE)[, c("x", "y")]
-occdf <- xy
-colnames(occdf) <- c("lng", "lat")
-saveRDS(object = occdf,
+# Generate a ~100 km grid using the h3jsr package
+# Get cells from resolution at 0
+cells <- h3jsr::get_res0()
+# Get child cells at resolution ~100 km
+cells <- get_children(h3_address = cells, res = 3)
+# Unlist cell list
+cells <- unlist(cells)
+# Get centroids of cells
+pts <- cell_to_point(cells, simple = FALSE)
+# Extract coordinates
+pts <- sf::st_coordinates(pts)
+# Update column names
+colnames(pts) <- c("lng", "lat")
+# Round coordinates
+pts <- round(pts, digits = 2)
+# Save data
+saveRDS(object = pts,
         file = "./REF.RDS",
-        compress = "xz")
+        compress = "xz")# Generate rotation files
 # Indexing ----------------------------------------------------------------
 # How many rows?
-nr <- nrow(occdf)
+nr <- nrow(pts)
 # Size of chunks to be rotated
 chunks <- nr / 300
 # Generate chunk bins
 chunks <- 300 * 1:chunks
-# Add starting value
-chunks <- append(0, chunks)
-# Ages to reconstruct -----------------------------------------------------
-ages <- c(1, 2, 3, 4, 6, 9, 13, 15, 18, 22, 25, 31, 36, 39, 44, 52, 58,
-          60, 64, 69, 78, 85, 88, 92, 97, 107, 119, 127, 131, 136, 142, 149,
-          155, 160, 165, 167, 169, 172, 178, 187, 195, 200, 205, 218, 232, 240,
-          245, 249, 252, 253, 257, 262, 267, 271, 278, 287, 292, 296, 301, 305,
-          311, 319, 327, 339, 353, 366, 377, 385, 390, 400, 409, 415, 421, 424,
-          426, 429, 432, 436, 440, 442, 444, 449, 456, 463, 469, 474, 482, 487,
-          492, 496, 499, 502, 507, 512, 518, 525, 535)
-
+# Add starting and ending value
+chunks <- c(0, chunks, nr)
 # Generate rotation files -------------------------------------------------
-for (m in mod) {
-  model <- m
-  rots <- pbmcapply::pbmclapply(ages, function(i) {
+for (m in 1:length(mod)) {
+  model <- mod[m]
+  dir.create(path = paste0("./", model))
+  
+  # Ages to reconstruct ---------------------------------------------------
+  ages <- c(1, 2, 3, 4, 6, 9, 13, 15, 18, 22, 25, 31, 36, 39, 44, 52, 58,
+            60, 64, 69, 78, 85, 88, 92, 97, 107, 119, 127, 131, 136, 142, 149,
+            155, 160, 165, 167, 169, 172, 178, 187, 195, 200, 205, 218, 232, 240,
+            245, 249, 252, 253, 257, 262, 267, 271, 278, 287, 292, 296, 301, 305,
+            311, 319, 327, 339, 353, 366, 377, 385, 390, 400, 409, 415, 421, 424,
+            426, 429, 432, 436, 440, 442, 444, 449, 456, 463, 469, 474, 482, 487,
+            492, 496, 499, 502, 507, 512, 518, 525, 535)
+  # Subset ages for model coverage
+  ages <- ages[which(ages <= age_range[model])]
+  # Reconstruct coordinates
+  pbmcapply::pbmclapply(ages, function(i) {
     rot_age <- i
     df <- lapply(2:length(chunks), function(x) {
       # Lower index
@@ -46,12 +71,14 @@ for (m in mod) {
       # Upper index
       ind_u <- chunks[x]
       # Make API
-      tmp <- occdf[ind_l:ind_u,]
+      tmp <- pts[ind_l:ind_u,]
       tmp <- toString(as.vector(t(tmp)))
       API <- sprintf('?points=%s&time=%f&model=%s', gsub(" ", "", tmp), rot_age, model)
       API <- paste0("https://gws.gplates.org/reconstruct/reconstruct_points/",
                     API, "&return_null_points")
-      pxy <- httr::RETRY("GET", API, times = 10,
+      pxy <- httr::RETRY(verb = "GET",
+                         url = API,
+                         times = 10,
                          pause_min = 5,
                          pause_base = 2,
                          pause_cap = 30)
@@ -68,41 +95,14 @@ for (m in mod) {
     # Bind data
     df <- do.call(rbind, df)
     # Order by cell number
-    df[order(df$cell),]
+    df <- df[order(df$cell),]
     # Extract palaeocoordinates
     df <- df[, c("lng", "lat")]
     # Add age to col names
     colnames(df) <- c(paste0("lng_", rot_age), paste0("lat_", rot_age))
     # Save data
     saveRDS(object = df,
-            file = paste0("./data/", model, "/rot_", rot_age, ".RDS"),
+            file = paste0("./", model, "/rot_", rot_age, ".RDS"),
             compress = "xz")
-    # Print df
-    df
-  }, mc.cores = detectCores()-1, mc.cleanup = TRUE)
+  }, mc.cores = detectCores(), mc.cleanup = TRUE)
 }
-
-#Format data -------------------------------------------------------------
-for (m in mod) {
-  # Load reference XY
-  df <- readRDS("./data/REF.RDS")
-  # Load rotations and bind to reference
-  for (i in ages) {
-    coords <- readRDS(paste0(
-      "./data/", m, "/rot_", i, ".RDS"))
-    df <- cbind.data.frame(df, coords)
-  }
-  # Round coordinates to two decimal places
-  df <- round(df, digits = 2)
-  # Remove row names
-  row.names(df) <- NULL
-  # Set points not rotated to NA
-  for (i in 1:nrow(df)) {
-    if (length(unique(as.numeric(df[i, ]))) == 2){
-      df[i, 3:ncol(df)] <- NA
-    }
-  }
-  # Save data
-  saveRDS(df, paste0("./data/", m,".RDS"), compress = "xz")
-}
-
