@@ -1,8 +1,15 @@
 # Prepare reconstruction files
 # Prepared by: Lewis A. Jones
 # Available models --------------------------------------------------------
-mod <- c("MERDITH2021", "MULLER2019", "MULLER2016", "MATTHEWS2016_mantle_ref",
-         "MATTHEWS2016_pmag_ref", "SETON2012", "GOLONKA", "PALEOMAP")
+mod <- c("MULLER2022",
+         "MERDITH2021",
+         "MULLER2019",
+         "MULLER2016",
+         "MATTHEWS2016_mantle_ref",
+         "MATTHEWS2016_pmag_ref",
+         "SETON2012",
+         "GOLONKA",
+         "PALEOMAP")
 
 # Rotation ages -----------------------------------------------------------
 ages <- c(1, 2, 3, 4, 6, 9, 13, 15, 18, 22, 25, 31, 36, 39, 44, 52, 58,
@@ -27,6 +34,7 @@ ref <- cbind(ref, df)
 
 # Load data ---------------------------------------------------------------
 for (i in mod) {
+  print(i)
   # Temp reference dataframe
   tmp <- ref
   # Get file names

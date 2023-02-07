@@ -8,16 +8,25 @@ library(sf)
 # Update working directory if using CESGA
 setwd("/mnt/netapp2/Store_uni/home/uvi/ba/ljo/rotations/")
 # Available models --------------------------------------------------------
-mod <- c("MERDITH2021", "MULLER2019", "MULLER2016", "MATTHEWS2016_mantle_ref",
-         "MATTHEWS2016_pmag_ref", "SETON2012", "GOLONKA", "PALEOMAP")
-age_range <- list(MERDITH2021 = 1000,
-                  MULLER2019 = 1100,
+mod <- c("MULLER2022",
+         "MERDITH2021",
+         "MULLER2019",
+         "MULLER2016",
+         "MATTHEWS2016_mantle_ref",
+         "MATTHEWS2016_pmag_ref",
+         "SETON2012",
+         "GOLONKA",
+         "PALEOMAP")
+
+age_range <- list(MULLER2022 = 1000,
+                  MERDITH2021 = 1000,
+                  MULLER2019 = 250,
                   MULLER2016 = 230,
                   MATTHEWS2016_mantle_ref = 410,
                   MATTHEWS2016_pmag_ref = 410,
                   SETON2012 = 200,
-                  GOLONKA = 540,
-                  PALEOMAP = 750)
+                  GOLONKA = 550,
+                  PALEOMAP = 1100)
 # Generate grid -----------------------------------------------------------
 # Generate a ~100 km grid using the h3jsr package
 # Get cells from resolution at 0
@@ -51,7 +60,7 @@ chunks <- c(0, chunks, nr)
 for (m in 1:length(mod)) {
   model <- mod[m]
   dir.create(path = paste0("./", model))
-  
+
   # Ages to reconstruct ---------------------------------------------------
   ages <- c(1, 2, 3, 4, 6, 9, 13, 15, 18, 22, 25, 31, 36, 39, 44, 52, 58,
             60, 64, 69, 78, 85, 88, 92, 97, 107, 119, 127, 131, 136, 142, 149,
